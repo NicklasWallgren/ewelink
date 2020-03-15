@@ -18,7 +18,7 @@ type emailAuthenticator struct {
 //
 func (e emailAuthenticator) Authenticate(context context.Context, client Client, session *Session) error {
 	response, err := client.call(newAuthenticationRequest(
-		buildEmailAuthenticationPayload(e.Email, e.Password, session)), context)
+		buildEmailAuthenticationPayload(e.Email, e.Password, session), session), context)
 
 	if err != nil {
 		return err
@@ -56,10 +56,10 @@ func buildEmailAuthenticationPayload(email string, password string, session *Ses
 		Ts:         time.Now().Unix(),
 		Nonce:      generateNonce(),
 		Appid:      session.Application.AppId,
-		Imei:       session.Device.Imei,
-		Os:         session.Device.Os,
-		Model:      session.Device.Model,
-		RomVersion: session.Device.RomVersion,
+		Imei:       session.IOSDevice.Imei,
+		Os:         session.IOSDevice.Os,
+		Model:      session.IOSDevice.Model,
+		RomVersion: session.IOSDevice.RomVersion,
 		AppVersion: session.Application.AppVersion,
 	}
 }

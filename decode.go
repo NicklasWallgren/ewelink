@@ -1,20 +1,20 @@
 package ewelink
 
 import (
-	"net/http"
+	"io"
 )
 
-type Decoder interface {
-	decode(subject Response, response *http.Response) (Response, error)
+type ResponseDecoder interface {
+	decode(subject Response, response io.ReadCloser) (Response, error)
 }
 
-type jsonDecoder struct{}
+type responseJsonDecoder struct{}
 
-func newJsonDecoder() Decoder {
-	return &jsonDecoder{}
+func newResponseJsonDecoder() ResponseDecoder {
+	return &responseJsonDecoder{}
 }
 
-func (j jsonDecoder) decode(subject Response, response *http.Response) (Response, error) {
+func (j responseJsonDecoder) decode(subject Response, response io.ReadCloser) (Response, error) {
 	// Decode the response into the expected response type
 	decoded, err := subject.Decode(response)
 
@@ -23,15 +23,18 @@ func (j jsonDecoder) decode(subject Response, response *http.Response) (Response
 	}
 
 	// Check whether we encountered an API error
-	if decoded.Envelope().Code > 0 {
+	if decoded.Envelope().Code() > 0 {
 		return nil, j.decodeAsApiError(decoded)
 	}
 
 	return decoded, nil
 }
 
-func (j jsonDecoder) decodeAsApiError(response Response) error {
+func (j responseJsonDecoder) decodeAsApiError(response Response) error {
 	envelope := response.Envelope()
 
-	return &apiError{Code: envelope.Code, Message: envelope.Message}
+	// TODO, Better handling of the different error causes, websocket vs http
+	// Include the actual response?
+
+	return &apiError{Code: envelope.Code(), Message: envelope.Cause()}
 }

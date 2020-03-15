@@ -7,17 +7,28 @@ import (
 )
 
 func TestAuthentication(t *testing.T) {
-	eweLink := New(NewConfiguration("eu"))
+	eweLink := New()
 
-	authenticator := NewEmailAuthenticator("EMAIL", "PASSWORD")
-	session, err := eweLink.Authenticate(context.Background(), authenticator)
+	// authenticate using email
+	session, err := eweLink.AuthenticateWithEmail(
+		context.Background(), NewConfiguration("eu"), "EMAIL", "PASSWORD")
 
-	fmt.Println(session)
+	if err != nil {
+		panic(err)
+	}
+
+	// retrieve the list of registered devices
+	devices, err := eweLink.GetDevices(context.Background(), session)
+
+	// turn on the outlet(s) of the first device
+	response, err := eweLink.SetDevicePowerState(context.Background(), session, &devices.Devicelist[0], true)
+
+	fmt.Println(response)
 	fmt.Println(err)
 }
 
 func TestAuthenticationWithEmail(t *testing.T) {
-	eweLink := New(NewConfiguration("eu"))
+	eweLink := New()
 
-	eweLink.AuthenticateWithEmail(context.Background(), "EMAIL", "PASSWORD")
+	eweLink.AuthenticateWithEmail(context.Background(), NewConfiguration("eu"), "EMAIL", "PASSWORD")
 }

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="370de5ea-1090-476d-964e-8a56852dc5a8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/authenticator.go" beforeDir="false" afterPath="$PROJECT_DIR$/authenticator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configuration.go" beforeDir="false" afterPath="$PROJECT_DIR$/configuration.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decode.go" beforeDir="false" afterPath="$PROJECT_DIR$/decode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/device.go" beforeDir="false" afterPath="$PROJECT_DIR$/device.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encode.go" beforeDir="false" afterPath="$PROJECT_DIR$/encode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ewelink.go" beforeDir="false" afterPath="$PROJECT_DIR$/ewelink.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ewelink_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ewelink_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/authenticate.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/authenticate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payload.go" beforeDir="false" afterPath="$PROJECT_DIR$/payload.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util.go" beforeDir="false" afterPath="$PROJECT_DIR$/util.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.3/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$USER_HOME$/Downloads/demo" value="PREVIEW" />
+        <entry key="$USER_HOME$/Downloads/hello-world" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../java/micronaut-spring" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
+  <component name="ProjectId" id="1VNWAKmw3iRdDNaPjHqq741kUke" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestAuthentication in github.com/NicklasWallgren/ewelink">
+    <configuration name="go build ewelink/examples" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ewelinkapi" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/examples/authenticate.go" />
+      <package value="ewelink/examples" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/NicklasWallgren/ewelink/examples" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ewelinkapi" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/examples/authenticate.go" />
+      <package value="github.com/NicklasWallgren/ewelink/examples" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestAuthentication in ewelink" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="ewelinkapi" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="ewelink" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestAuthentication$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestAuthentication in github.com/NicklasWallgren/ewelink" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="ewelinkapi" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/NicklasWallgren/ewelink" />
+      <pattern value="^TestAuthentication$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestAuthenticationWithEmail in ewelink" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="ewelinkapi" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="ewelink" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestAuthenticationWithEmail$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestAuthentication in github.com/NicklasWallgren/ewelink" />
+        <item itemvalue="Go Build.go build github.com/NicklasWallgren/ewelink/examples" />
+        <item itemvalue="Go Test.TestAuthentication in ewelink" />
+        <item itemvalue="Go Test.TestAuthenticationWithEmail in ewelink" />
+        <item itemvalue="Go Build.go build ewelink/examples" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="115" key="#Go_Modules_(vgo)" timestamp="1577094213836">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Go_Modules_(vgo)/0.0.1440.900@0.0.1440.900" timestamp="1577094213836" />
+    <state x="499" y="166" key="#com.intellij.ide.util.MemberChooser" timestamp="1577889147214">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="499" y="166" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1577889147214" />
+    <state x="405" y="132" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1577132294648">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="405" y="132" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.0.1440.900@0.0.1440.900" timestamp="1577132294648" />
+    <state x="609" y="160" key="#xdebugger.evaluate" timestamp="1584264251368">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="609" y="160" key="#xdebugger.evaluate/0.0.1440.900@0.0.1440.900" timestamp="1584264251368" />
+    <state x="300" y="52" key="CommitChangelistDialog2" timestamp="1584263886509">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="300" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1584263886509" />
+    <state x="144" y="78" key="DiffContextDialog" timestamp="1584263886470">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="144" y="78" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1584263886470" />
+    <state width="1398" height="374" key="GridCell.Tab.0.bottom" timestamp="1584264434448">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584264434448" />
+    <state width="1398" height="230" key="GridCell.Tab.0.bottom/0.23.1440.835@0.23.1440.835" timestamp="1577954310794" />
+    <state width="1398" height="374" key="GridCell.Tab.0.center" timestamp="1584264434446">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584264434446" />
+    <state width="1398" height="230" key="GridCell.Tab.0.center/0.23.1440.835@0.23.1440.835" timestamp="1577954310791" />
+    <state width="1398" height="374" key="GridCell.Tab.0.left" timestamp="1584264434445">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584264434445" />
+    <state width="1398" height="230" key="GridCell.Tab.0.left/0.0.1440.900@0.23.1440.835" timestamp="1577890961180" />
+    <state width="1398" height="230" key="GridCell.Tab.0.left/0.23.1440.835@0.23.1440.835" timestamp="1577954310789" />
+    <state width="1398" height="374" key="GridCell.Tab.0.right" timestamp="1584264434447">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584264434447" />
+    <state width="1398" height="230" key="GridCell.Tab.0.right/0.23.1440.835@0.23.1440.835" timestamp="1577954310793" />
+    <state width="1398" height="374" key="GridCell.Tab.1.bottom" timestamp="1584264434452">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584264434452" />
+    <state width="1398" height="374" key="GridCell.Tab.1.center" timestamp="1584264434450">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1584264434450" />
+    <state width="1398" height="374" key="GridCell.Tab.1.left" timestamp="1584264434449">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1584264434449" />
+    <state width="1398" height="374" key="GridCell.Tab.1.right" timestamp="1584264434451">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="374" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1584264434451" />
+    <state x="229" y="89" key="SettingsEditor" timestamp="1577279045394">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1577279045394" />
+    <state x="450" y="200" width="540" height="524" key="StructurePopup" timestamp="1578323472893">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="450" y="200" width="540" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1578323472893" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1584264008335">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.0.1440.900@0.0.1440.900" timestamp="1584264008335" />
+    <state width="720" height="450" key="XDebugger.FullValuePopup" timestamp="1577710487387">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1577710487387" />
+    <state x="100" y="100" width="1240" height="700" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1578303251968">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="100" y="100" width="1240" height="700" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1440.900@0.0.1440.900" timestamp="1578303251968" />
+    <state x="386" y="59" width="667" height="629" key="find.popup" timestamp="1578315463583">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="386" y="59" width="667" height="629" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1578315463583" />
+    <state x="595" y="325" width="250" height="278" key="jetbrains.javascript.buildTools.run-task-popup" timestamp="1577955395259">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="595" y="325" width="250" height="278" key="jetbrains.javascript.buildTools.run-task-popup/0.0.1440.900@0.0.1440.900" timestamp="1577955395259" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1578317989847">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1578317989847" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ewelink.go</url>
+          <line>130</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/client.go</url>
+          <line>52</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/decode.go</url>
+          <line>18</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ewelink.go</url>
+          <line>44</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/response.go</url>
+          <line>9</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ewelink.go</url>
+          <line>68</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ewelink_test.go</url>
+          <line>12</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

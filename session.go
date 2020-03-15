@@ -4,10 +4,11 @@ import "fmt"
 
 // Session holds the metadata
 type Session struct {
-	Device                 *Device
+	IOSDevice              *IOSDevice // TODO, Device interface?
 	Application            *Application
 	AuthenticationToken    string
 	AuthenticationResponse *AuthenticationResponse
+	Configuration          *configuration
 }
 
 func (s Session) String() string {
@@ -22,10 +23,10 @@ func (s *Session) updateTokenAndResponse(response *AuthenticationResponse) {
 // Session option definition
 type SessionOption func(session *Session)
 
-// Function to create SessionOption func to set custom device
-func withDevice(device *Device) SessionOption {
+// Function to create SessionOption func to set custom ios device
+func withIOSDevice(device *IOSDevice) SessionOption {
 	return func(subject *Session) {
-		subject.Device = device
+		subject.IOSDevice = device
 	}
 }
 

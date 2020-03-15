@@ -10,28 +10,27 @@ import (
 // Client is the interface implemented by types that can invoke the ewelink API
 type Client interface {
 	// call is responsible for making the HTTP call against ewelink API
-	call(request Request, context context.Context) (Response, error)
+	call(request HttpRequest, context context.Context) (Response, error)
 }
 
 type client struct {
-	client        *http.Client
-	encoder       Encoder
-	decoder       Decoder
-	configuration *configuration
+	client  *http.Client
+	encoder Encoder
+	decoder ResponseDecoder
 }
 
-func newClient(configuration *configuration) *client {
-	return &client{client: &http.Client{}, encoder: newJsonEncoder(), decoder: newJsonDecoder(), configuration: configuration}
+func newClient() *client {
+	return &client{client: &http.Client{}, encoder: newJsonEncoder(), decoder: newResponseJsonDecoder()}
 }
 
-func (c client) call(request Request, context context.Context) (Response, error) {
+func (c client) call(request HttpRequest, context context.Context) (Response, error) {
 	encoded, err := c.encoder.encode(request.Payload())
 
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := c.newRequest(request.Method(), c.configuration.Url+"/"+request.Uri(), request.Query(), encoded, request.Headers(),
+	req, err := c.newRequest(request.Method(), request.Session().Configuration.ApiUrl+"/"+request.Uri(), request.Query(), encoded, request.Headers(),
 		request.IsToBeSigned())
 
 	if err != nil {
@@ -46,10 +45,10 @@ func (c client) call(request Request, context context.Context) (Response, error)
 
 	defer resp.Body.Close()
 
-	return c.decoder.decode(request.Response(), resp)
+	return c.decoder.decode(request.Response(), resp.Body)
 }
 
-// newRequest creates and prepares a instance of http request
+// newRequest creates and prepares a instance of http httpRequest
 func (c client) newRequest(method string, url string, query *url.Values, body []byte, headers *http.Header, isSigned bool) (*http.Request, error) {
 	req, err := http.NewRequest(method, url, strings.NewReader(string(body)))
 
