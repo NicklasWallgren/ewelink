@@ -2,43 +2,46 @@ package ewelink
 
 import (
 	"encoding/json"
-	"net/url"
-	"time"
 )
 
-// payload holds the httpRequest fields to be delivered to the API
-type payload struct {
-	payloadInterface
-}
+const (
+	on  = "on"
+	off = "off"
+)
 
-// payloadInterface is the interface implemented by types that holds the fields to be delivered to the API
-type payloadInterface interface{}
+// payload is the interface implemented by types that holds the fields to be delivered to the API.
+type payload interface{}
 
-// emailAuthenticationPayload holds the required and optional fields of the payment httpRequest
+type parameters interface{}
+
+// emailAuthenticationPayload holds the required and optional fields of the payment httpRequest.
 type emailAuthenticationPayload struct {
-	*payload
-	Email      string `json:"email"`
-	Password   string `json:"password"`
-	Version    string `json:"version"`
-	Ts         int64  `json:"ts"`
-	Nonce      string `json:"nonce"`
-	Appid      string `json:"appid"`
-	Imei       string `json:"imei"`
-	Os         string `json:"os"`
-	Model      string `json:"model"`
-	RomVersion string `json:"romversion"`
-	AppVersion string `json:"appversion"`
+	payload    `json:"-"` // nolint:unused
+	Email      string     `json:"email"`
+	Password   string     `json:"password"`
+	Version    string     `json:"version"`
+	Ts         int64      `json:"ts"`
+	Nonce      string     `json:"nonce"`
+	AppID      string     `json:"appid"`
+	Imei       string     `json:"imei"`
+	Os         string     `json:"os"`
+	Model      string     `json:"model"`
+	RomVersion string     `json:"romversion"`
+	AppVersion string     `json:"appversion"`
 }
 
+// DevicePowerStateParameters for devices with only one outlet.
 type DevicePowerStateParameters struct {
-	PowerOn bool `json:"switch"`
+	parameters `json:"-"` // nolint:unused
+	PowerOn    bool       `json:"switch"`
 }
 
+// MarshalJSON returns a JSON encoded 'DevicePowerStateParameters'.
 func (d DevicePowerStateParameters) MarshalJSON() ([]byte, error) {
-	power := "off"
+	power := off
 
 	if d.PowerOn {
-		power = "on"
+		power = on
 	}
 
 	return json.Marshal(&struct {
@@ -46,18 +49,22 @@ func (d DevicePowerStateParameters) MarshalJSON() ([]byte, error) {
 	}{Switch: power})
 }
 
+// DeviceOutletPowerStateAction device with multiple outlets.
 type DeviceOutletPowerStateAction struct {
-	PowerOn []bool `json:"switches"`
+	parameters `json:"-"` // nolint:unused
+	PowerOn    []bool     `json:"switches"`
 }
 
+// MarshalJSON returns a JSON encoded 'DeviceOutletPowerStateAction'.
 func (d DeviceOutletPowerStateAction) MarshalJSON() ([]byte, error) {
-	var outlets []string
+	outlets := make([]string, len(d.PowerOn))
 
 	for i, v := range d.PowerOn {
-		state := "on"
+		state := on
 
+		// nolint:gosimple
 		if v == false {
-			state = "off"
+			state = off
 		}
 
 		outlets[i] = state
@@ -68,24 +75,27 @@ func (d DeviceOutletPowerStateAction) MarshalJSON() ([]byte, error) {
 	}{Switch: outlets})
 }
 
+// ActionPayload struct.
 type ActionPayload struct {
-	Action     string      `json:"action"`
-	UserAgent  string      `json:"userAgent"`
-	Parameters interface{} `json:"params"`
-	ApiKey     string      `json:"apikey"`
-	DeviceId   string      `json:"deviceid"`
-	Sequence   int64       `json:"sequence"`
+	Action     string     `json:"action"`
+	UserAgent  string     `json:"userAgent"`
+	Parameters parameters `json:"params"`
+	APIKey     string     `json:"apikey"`
+	DeviceID   string     `json:"deviceid"`
+	Sequence   int64      `json:"sequence"`
 }
 
+// AuthenticateActionPayload struct.
 type AuthenticateActionPayload struct {
 	Action     string `json:"action"`
+	APIKey     string `json:"apikey"`
+	AppID      string `json:"appid"`
 	UserAgent  string `json:"userAgent"`
 	Version    string `json:"version"`
 	Nonce      string `json:"nonce"`
 	ApkVersion string `json:"apkVersion"`
 	Os         string `json:"os"`
 	At         string `json:"at"`
-	ApiKey     string `json:"apikey"`
 	Ts         string `json:"ts"`
 	Model      string `json:"model"`
 	RomVersion string `json:"romVersion"`
@@ -93,43 +103,30 @@ type AuthenticateActionPayload struct {
 }
 
 func createAuthenticateActionPayload(session *Session) *AuthenticateActionPayload {
-
-	// TODO, grab the information from the session metadata
-
 	return &AuthenticateActionPayload{
 		Action:     "userOnline",
 		UserAgent:  "app",
-		Version:    "6",
+		Version:    session.Application.Version,
 		Nonce:      generateNonce(),
-		ApkVersion: "1.8",
-		Os:         "ios",
+		ApkVersion: session.Application.ApkVersion,
+		Os:         session.MobileDevice.Os(),
 		At:         session.AuthenticationToken,
-		ApiKey:     session.AuthenticationResponse.User.ApiKey,
+		APIKey:     session.User.APIKey,
+		AppID:      session.User.AppID,
 		Ts:         "1",
-		Model:      "iPhone10,6",
-		RomVersion: "11.1.2",
+		Model:      session.MobileDevice.Model(),
+		RomVersion: session.MobileDevice.RomVersion(),
 		Sequence:   1,
 	}
 }
 
-func createUpdateActionPayload(parameters interface{}, apiKey string, deviceId string) *ActionPayload {
+func createUpdateActionPayload(parameters parameters, apiKey string, deviceID string) *ActionPayload {
 	return &ActionPayload{
 		Action:     "update",
 		UserAgent:  "app",
 		Parameters: parameters,
-		ApiKey:     apiKey,
-		DeviceId:   deviceId,
+		APIKey:     apiKey,
+		DeviceID:   deviceID,
 		Sequence:   2,
 	}
-}
-
-func createDeviceQuery(session *Session) *url.Values {
-	query := &url.Values{}
-	query.Add("lang", session.AuthenticationResponse.User.Language)
-	query.Add("getTags", "1")
-	query.Add("version", version)
-	query.Add("ts", string(time.Now().Unix()))
-	query.Add("appid", appId)
-
-	return query
 }

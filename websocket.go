@@ -4,58 +4,66 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"io/ioutil"
+	"net/http"
 	"net/url"
+
+	"github.com/gorilla/websocket"
 )
 
-const websocketScheme = "wss"
-const websocketUri = "/api/ws"
+const (
+	websocketScheme = "wss"
+	websocketURI    = "/api/ws"
+)
 
+// WebsocketClient is the interface implemented by types that can invoke the Ewelink Websocket Api.
 type WebsocketClient interface {
-	call(context context.Context, requests []WebsocketRequest, session *Session) ([]*result, error)
+	call(context context.Context, requests []WebsocketRequest, session *Session) ([]*requestResult, error)
 }
 
 type websocketClient struct {
-	encoder       Encoder
-	decoder       ResponseDecoder
+	encoder encoder
+	decoder responseDecoder
 }
 
 func newWebsocketClient() *websocketClient {
-	return &websocketClient{encoder: newJsonEncoder(), decoder: newResponseJsonDecoder()}
+	return &websocketClient{encoder: newJSONEncoder(), decoder: newJSONResponseDecoder()}
 }
 
-type result struct {
+type requestResult struct {
 	Response Response
 	Error    error
 }
 
-func (w websocketClient) connect(context context.Context, url url.URL) (*websocket.Conn, error) {
-	c, _, err := websocket.DefaultDialer.DialContext(context, url.String(), nil)
-
-	return c, err
-}
-
-func (w websocketClient) call(context context.Context, requests []WebsocketRequest, session *Session) ([]*result, error) {
-	connection, err := w.connect(context,
-		url.URL{Scheme: websocketScheme, Host: session.Configuration.WebsocketHost, Path: websocketUri})
-
+func (w websocketClient) connect(context context.Context, url *url.URL) (*websocket.Conn, error) {
+	c, response, err := websocket.DefaultDialer.DialContext(context, url.String(), nil)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to establish websocket connection %w", err)
 	}
 
-	defer connection.Close()
+	defer response.Body.Close() // nolint:errcheck
+
+	return c, nil
+}
+
+func (w websocketClient) call(context context.Context, requests []WebsocketRequest, session *Session) ([]*requestResult, error) {
+	connection, err := w.connect(context, session.Configuration.WebsocketURL)
+	if err != nil {
+		return nil, fmt.Errorf("could not connect. %w", err)
+	}
+
+	defer connection.Close() // nolint:errcheck
 
 	return w.do(connection, requests), nil
 }
 
-func (w websocketClient) do(connection *websocket.Conn, requests []WebsocketRequest) []*result {
-	var responses = make([]*result, len(requests))
+func (w websocketClient) do(connection *websocket.Conn, requests []WebsocketRequest) []*requestResult {
+	responses := make([]*requestResult, len(requests))
 
 	for i, request := range requests {
 		response, err := w.request(connection, request)
 
-		responses[i] = &result{Response: response, Error: err}
+		responses[i] = &requestResult{Response: response, Error: err}
 	}
 
 	return responses
@@ -69,11 +77,10 @@ func (w websocketClient) request(connection *websocket.Conn, request WebsocketRe
 	return w.readMessage(connection, request.Response())
 }
 
-func (w websocketClient) sendMessage(connection *websocket.Conn, payload payloadInterface) error {
+func (w websocketClient) sendMessage(connection *websocket.Conn, payload payload) error {
 	encoded, err := w.encoder.encode(payload)
-
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to send websocket message %w", err)
 	}
 
 	return connection.WriteMessage(websocket.TextMessage, encoded)
@@ -81,12 +88,9 @@ func (w websocketClient) sendMessage(connection *websocket.Conn, payload payload
 
 func (w websocketClient) readMessage(connection *websocket.Conn, response Response) (Response, error) {
 	_, message, err := connection.ReadMessage()
-
 	if err != nil {
-		return nil, nil
+		return nil, fmt.Errorf("unable to read message from websocket connection %w", err)
 	}
 
-	fmt.Println(string(message))
-
-	return w.decoder.decode(response, ioutil.NopCloser(bytes.NewReader(message)))
+	return w.decoder.decode(response, ioutil.NopCloser(bytes.NewReader(message)), http.StatusOK)
 }
