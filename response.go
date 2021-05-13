@@ -4,14 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 	"time"
 )
 
+// Response interface.
 type Response interface {
 	Decode(payload io.ReadCloser) (Response, error)
 	Envelope() Envelope
 }
 
+// Envelope interface.
 type Envelope interface {
 	Code() int
 	Cause() string
@@ -31,6 +34,11 @@ func (r httpResponseEnvelope) Cause() string {
 	return r.Message
 }
 
+// isErroneous returns true if an error encountered, false otherwise.
+func (r httpResponseEnvelope) isErroneous() bool {
+	return r.Error > 0
+}
+
 type httpResponse struct {
 	httpResponseEnvelope
 }
@@ -40,14 +48,14 @@ func (h *httpResponse) Decode(payload io.ReadCloser) (Response, error) {
 }
 
 func (h httpResponse) Envelope() Envelope {
-	return h
+	return &h
 }
 
 type websocketResponseEnvelope struct {
 	Error    int    `json:"error"`
 	Sequence string `json:"sequence"`
 	Message  string `json:"reason"`
-	DeviceId string `json:"deviceId"`
+	DeviceID string `json:"deviceId"`
 }
 
 func (w websocketResponseEnvelope) Code() int {
@@ -56,6 +64,12 @@ func (w websocketResponseEnvelope) Code() int {
 
 func (w websocketResponseEnvelope) Cause() string {
 	return w.Message
+}
+
+// isErroneous returns true if an error encountered, false otherwise.
+// nolint:unused
+func (w websocketResponseEnvelope) isErroneous() bool {
+	return w.Error > 0
 }
 
 type websocketResponse struct {
@@ -67,15 +81,15 @@ func (w *websocketResponse) Decode(payload io.ReadCloser) (Response, error) {
 }
 
 func (w websocketResponse) Envelope() Envelope {
-	return w
+	return &w
 }
 
+// AuthenticationResponse struct.
 type AuthenticationResponse struct {
 	httpResponse
-	At     string `json:"at"`
-	Rt     string `json:"rt"`
-	User   User   `json:"user"`
-	Region string `json:"region"`
+	At   string `json:"at"`
+	Rt   string `json:"rt"`
+	User User   `json:"user"`
 }
 
 func (a AuthenticationResponse) String() string {
@@ -86,16 +100,17 @@ func (a *AuthenticationResponse) Decode(payload io.ReadCloser) (Response, error)
 	return a, decode(payload, a)
 }
 
+// User struct.
 type User struct {
-	Id              string      `json:"_id"`
+	ID              string      `json:"_id"`
 	Email           string      `json:"email"`
 	Password        string      `json:"password"`
-	AppId           string      `json:"appid"`
+	AppID           string      `json:"appid"`
 	CreatedAt       string      `json:"createdat"`
-	ApiKey          string      `json:"apikey"`
+	APIKey          string      `json:"apikey"`
 	Online          bool        `json:"online"`
 	OnlineTime      string      `json:"onlinetime"`
-	Ip              string      `json:"ip"`
+	IP              string      `json:"ip"`
 	Location        string      `json:"location"`
 	Language        string      `json:"lang"`
 	OfflineTime     string      `json:"offlinetime"`
@@ -105,8 +120,41 @@ type User struct {
 	UnknownField01  int         `json:"__v"`
 }
 
+func (u User) String() string {
+	return fmt.Sprintf("%#v", u)
+}
+
+// SetDevicePowerStateResponse struct.
+type SetDevicePowerStateResponse struct {
+	websocketResponse
+}
+
+func (r SetDevicePowerStateResponse) String() string {
+	return fmt.Sprintf("%#v", r)
+}
+
+func (r *SetDevicePowerStateResponse) Decode(payload io.ReadCloser) (Response, error) {
+	return r, decode(payload, r)
+}
+
+// SetDeviceOutletPowerStateResponse struct.
+type SetDeviceOutletPowerStateResponse struct {
+	websocketResponse
+}
+
+func (r SetDeviceOutletPowerStateResponse) String() string {
+	return fmt.Sprintf("%#v", r)
+}
+
+func (r *SetDeviceOutletPowerStateResponse) Decode(payload io.ReadCloser) (Response, error) {
+	return r, decode(payload, r)
+}
+
+// AppInformation struct.
 type AppInformation struct{}
 
+// Device struct.
+// nolint:maligned
 type Device struct {
 	Settings struct {
 		OpsNotify   int `json:"opsNotify"`
@@ -120,7 +168,7 @@ type Device struct {
 	ID        string        `json:"_id"`
 	Name      string        `json:"name"`
 	Type      string        `json:"type"`
-	Deviceid  string        `json:"deviceid"`
+	DeviceID  string        `json:"deviceid"`
 	Apikey    string        `json:"apikey"`
 	Extra     struct {
 		Extra struct {
@@ -191,6 +239,28 @@ type Device struct {
 	} `json:"tags,omitempty"`
 }
 
+func (d Device) outletCount() (int, error) {
+	return getDeviceOutletsCount(strconv.Itoa(d.Uiid))
+}
+
+func (d Device) validOutletIndice(outletIndex int) error {
+	numberOfOutlets, err := d.outletCount()
+	if err != nil {
+		return err
+	}
+
+	if outletIndex < 0 || outletIndex > numberOfOutlets-1 {
+		return fmt.Errorf("invalid outlet index. Number of outlets for device: %d", numberOfOutlets)
+	}
+
+	return nil
+}
+
+func (d *Device) String() string {
+	return fmt.Sprintf("%#v", d)
+}
+
+// DevicesResponse struct.
 type DevicesResponse struct {
 	httpResponse
 	Devicelist []Device `json:"devicelist"`
@@ -204,9 +274,18 @@ func (d DevicesResponse) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+func (d DevicesResponse) getDeviceByID(deviceID string) (*Device, error) {
+	for _, device := range d.Devicelist {
+		if device.DeviceID == deviceID {
+			return &device, nil
+		}
+	}
+
+	return nil, fmt.Errorf("invalid device id provided %s", deviceID)
+}
+
 func decode(subject io.ReadCloser, target interface{}) error {
 	decoder := json.NewDecoder(subject)
-	//decoder.DisallowUnknownFields()
 
 	return decoder.Decode(&target)
 }

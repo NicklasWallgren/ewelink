@@ -1,0 +1,39 @@
+linters:
+  enable:
+    # enable by default
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+    # disabled by default
+    - depguard
+    - bodyclose
+    - dupl
+    - errorlint
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - gofmt
+    - gofumpt
+    - goimports
+    - golint
+    - gosec
+    - maligned
+    - nestif
+    - noctx
+    - whitespace
+    - wrapcheck
+
+issues:
+  exclude-use-default: false
+
+
+

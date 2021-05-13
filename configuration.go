@@ -1,18 +1,31 @@
 package ewelink
 
-import "fmt"
+import (
+	"fmt"
+	"net/url"
+)
 
 const (
-	baseUrl       = "https://%s-api.coolkit.cc:8080/api"
+	baseURL       = "https://%s-api.coolkit.cc:8080/api"
 	websocketHost = "%s-pconnect3.coolkit.cc:8080"
 )
 
-type configuration struct {
-	Region        string // user specified region
-	ApiUrl        string // http api url
-	WebsocketHost string // host or host:port
+// Configuration contains the configuration specific fields.
+type Configuration struct {
+	// The user account region
+	Region       string
+	APIURL       string
+	WebsocketURL *url.URL
 }
 
-func NewConfiguration(region string) *configuration {
-	return &configuration{Region: region, ApiUrl: fmt.Sprintf(baseUrl, region), WebsocketHost: fmt.Sprintf(websocketHost, region)}
+func (c Configuration) String() string {
+	return fmt.Sprintf("%#v", c)
+}
+
+// NewConfiguration creates a new Configuration.
+func NewConfiguration(region string) *Configuration {
+	return &Configuration{
+		Region: region, APIURL: fmt.Sprintf(baseURL, region),
+		WebsocketURL: &url.URL{Scheme: websocketScheme, Host: fmt.Sprintf(websocketHost, region), Path: websocketURI},
+	}
 }
