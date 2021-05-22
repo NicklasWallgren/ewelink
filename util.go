@@ -10,25 +10,32 @@ import (
 	"math/rand"
 )
 
+const hash = "6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM"
+
 func generateNonce() string {
-	return "1"
+	return "1" // TODO
 }
 
 func getRandomNumber(n1 int, n2 int) int {
-	return rand.Intn(n2-n1) + n1
+	return rand.Intn(n2-n1) + n1 // #nosec:G404
 }
 
-func calculateHash(subject []byte) string {
-	mac := hmac.New(sha256.New, []byte("6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM"))
-	mac.Write(subject)
+func calculateHash(subject []byte) (string, error) {
+	mac := hmac.New(sha256.New, []byte(hash))
+	if _, err := mac.Write(subject); err != nil {
+		return "", fmt.Errorf("unable to hash content %w", err)
+	}
 
-	return base64.StdEncoding.EncodeToString(mac.Sum(nil))
+	return base64.StdEncoding.EncodeToString(mac.Sum(nil)), nil
 }
 
-func readerToString(reader io.Reader) string {
+// nolint:deadcode,unused
+func tryReadCloserToString(readCloser io.ReadCloser) string {
 	buf := new(bytes.Buffer)
 
-	buf.ReadFrom(reader)
+	if _, err := buf.ReadFrom(readCloser); err != nil {
+		return ""
+	}
 
 	return buf.String()
 }
@@ -51,7 +58,6 @@ func getDeviceTypeOutletsCount(deviceType string) (int, error) {
 
 func getDeviceOutletsCount(uuid string) (int, error) {
 	deviceType, err := getDeviceType(uuid)
-
 	if err != nil {
 		return 0, err
 	}

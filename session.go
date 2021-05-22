@@ -2,13 +2,13 @@ package ewelink
 
 import "fmt"
 
-// Session holds the metadata
+// Session holds the session metadata.
 type Session struct {
-	IOSDevice              *IOSDevice // TODO, Device interface?
-	Application            *Application
-	AuthenticationToken    string
-	AuthenticationResponse *AuthenticationResponse
-	Configuration          *configuration
+	MobileDevice        MobileDevice
+	Application         *Application
+	AuthenticationToken string
+	User                *User
+	Configuration       *Configuration
 }
 
 func (s Session) String() string {
@@ -17,20 +17,22 @@ func (s Session) String() string {
 
 func (s *Session) updateTokenAndResponse(response *AuthenticationResponse) {
 	s.AuthenticationToken = response.At
-	s.AuthenticationResponse = response
+	s.User = &response.User
 }
 
-// Session option definition
+// SessionOption option definition.
 type SessionOption func(session *Session)
 
-// Function to create SessionOption func to set custom ios device
-func withIOSDevice(device *IOSDevice) SessionOption {
+// Function to create SessionOption func to set custom mobile device.
+// nolint:deadcode,unused
+func withMobileDevice(device MobileDevice) SessionOption {
 	return func(subject *Session) {
-		subject.IOSDevice = device
+		subject.MobileDevice = device
 	}
 }
 
-// Function to create SessionOption func to set custom application
+// Function to create SessionOption func to set custom application.
+// nolint:deadcode,unused
 func withApplication(application *Application) SessionOption {
 	return func(subject *Session) {
 		subject.Application = application

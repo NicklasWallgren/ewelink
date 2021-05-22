@@ -2,10 +2,11 @@ package ewelink
 
 import (
 	"context"
+	"fmt"
 	"time"
 )
 
-// Authenticator is the interface implemented by types that authenticate a user
+// Authenticator is the interface implemented by types that authenticate a user.
 type Authenticator interface {
 	Authenticate(context context.Context, client Client, session *Session) error
 }
@@ -15,13 +16,12 @@ type emailAuthenticator struct {
 	Password string
 }
 
-//
+// Authenticate authenticates using email as primary identifier.
 func (e emailAuthenticator) Authenticate(context context.Context, client Client, session *Session) error {
-	response, err := client.call(newAuthenticationRequest(
-		buildEmailAuthenticationPayload(e.Email, e.Password, session), session), context)
-
+	response, err := client.call(context, newAuthenticationRequest(
+		buildEmailAuthenticationPayload(e.Email, e.Password, session), session))
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to authenticate using email. %w", err)
 	}
 
 	session.updateTokenAndResponse((response).(*AuthenticationResponse))
@@ -34,16 +34,17 @@ type phoneNumberAuthenticator struct {
 	Password    string
 }
 
+// Authenticate authenticates using phone number as the primary identifier.
 func (p phoneNumberAuthenticator) Authenticate(context context.Context, client Client, session *Session) error {
 	panic("implement me")
 }
 
-// NewEmailAuthenticator returns a new instance of 'NewEmailAuthenticator'
+// NewEmailAuthenticator returns a new instance of 'NewEmailAuthenticator.
 func NewEmailAuthenticator(email string, password string) Authenticator {
 	return &emailAuthenticator{Email: email, Password: password}
 }
 
-// NewPhoneNumberAuthenticator returns a new instance of 'NewPhoneNumberAuthenticator'
+// NewPhoneNumberAuthenticator returns a new instance of 'NewPhoneNumberAuthenticator.
 func NewPhoneNumberAuthenticator(phoneNumber string, password string) Authenticator {
 	return &phoneNumberAuthenticator{PhoneNumber: phoneNumber, Password: password}
 }
@@ -55,11 +56,11 @@ func buildEmailAuthenticationPayload(email string, password string, session *Ses
 		Version:    session.Application.Version,
 		Ts:         time.Now().Unix(),
 		Nonce:      generateNonce(),
-		Appid:      session.Application.AppId,
-		Imei:       session.IOSDevice.Imei,
-		Os:         session.IOSDevice.Os,
-		Model:      session.IOSDevice.Model,
-		RomVersion: session.IOSDevice.RomVersion,
+		AppID:      session.Application.AppID,
+		Imei:       session.MobileDevice.Imei(),
+		Os:         session.MobileDevice.Os(),
+		Model:      session.MobileDevice.Model(),
+		RomVersion: session.MobileDevice.RomVersion(),
 		AppVersion: session.Application.AppVersion,
 	}
 }

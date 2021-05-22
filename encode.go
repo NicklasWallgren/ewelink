@@ -2,13 +2,13 @@ package ewelink
 
 import "encoding/json"
 
-type Encoder interface {
+type encoder interface {
 	encode(payload interface{}) ([]byte, error)
 }
 
 type jsonEncoder struct{}
 
-func newJsonEncoder() Encoder {
+func newJSONEncoder() encoder {
 	return &jsonEncoder{}
 }
 
