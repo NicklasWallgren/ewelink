@@ -111,9 +111,6 @@ func TestSetDevicePowerState(t *testing.T) {
 	}
 }
 
-
-
-
 // setupWithHttp sets up a test http server along with ewelink.
 func setupWithHTTP() (*Ewelink, *http.ServeMux, func()) {
 	httpClient, mux, teardown := setupHTTPClientAndServer()

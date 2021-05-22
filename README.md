@@ -23,7 +23,6 @@ We support the two major Go versions, which are 1.15 and 1.16 at the moment.
 - Retrieve devices
 - Turn on/off devices
 - Get power consumption [TODO]
-- Listen to device events
 
 # Examples 
 

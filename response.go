@@ -35,6 +35,7 @@ func (r httpResponseEnvelope) Cause() string {
 }
 
 // isErroneous returns true if an error encountered, false otherwise.
+// nolint:unused
 func (r httpResponseEnvelope) isErroneous() bool {
 	return r.Error > 0
 }
