@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jacostaperu/ewelink"
+	"github.com/NicklasWallgren/ewelink"
 )
 
 func main() {
