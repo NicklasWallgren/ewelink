@@ -37,8 +37,16 @@ import (
 instance := ewelink.New()
 
 // authenticate using email
-session, err := instance.AuthenticateWithEmail(
-	context.Background(), ewelink.NewConfiguration("REGION"), "EMAIL", "PASSWORD")
+//session, err := instance.AuthenticateWithEmail(
+//	context.Background(), ewelink.NewConfiguration("REGION"), "EMAIL", "PASSWORD")
+
+// you need to get APP_ID and APP_SECRET from https://dev.ewelink.cc
+// the following ones are valid for 1 year so they migth not be valid when you check this code :)
+// please go and get yours :).
+
+application := ewelink.NewApplication()
+application.AppID = "YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q"
+application.AppSecret = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa"
 
 // retrieve the list of registered devices
 devices, err := instance.GetDevices(context.Background(), session)

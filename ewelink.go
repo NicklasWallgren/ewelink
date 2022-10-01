@@ -28,8 +28,8 @@ func New(options ...Option) *Ewelink {
 }
 
 // Authenticate - Authenticates a new user session using an authenticator.
-func (e Ewelink) Authenticate(context context.Context, configuration *Configuration, authenticator Authenticator, options ...SessionOption) (*Session, error) {
-	session := &Session{MobileDevice: newIOSDevice(), Application: newApplication(), Configuration: configuration}
+func (e Ewelink) Authenticate(context context.Context, configuration *Configuration, application *Application, authenticator Authenticator, options ...SessionOption) (*Session, error) {
+	session := &Session{MobileDevice: newIOSDevice(), Application: application, Configuration: configuration}
 
 	// newSessionWith
 
@@ -46,20 +46,20 @@ func (e Ewelink) Authenticate(context context.Context, configuration *Configurat
 }
 
 // AuthenticateWithEmail - Authenticates a new user session using email as identifier.
-func (e Ewelink) AuthenticateWithEmail(context context.Context, configuration *Configuration, email string, password string, options ...SessionOption) (*Session, error) {
-	return e.Authenticate(context, configuration, NewEmailAuthenticator(email, password), options...)
+func (e Ewelink) AuthenticateWithEmail(context context.Context, configuration *Configuration, email string, password string, application *Application, options ...SessionOption) (*Session, error) {
+	return e.Authenticate(context, configuration, application, NewEmailAuthenticator(email, password), options...)
 }
 
 // AuthenticateWithPhoneNumber - Authenticates a new user session using phoneNumber as identifier.
-func (e Ewelink) AuthenticateWithPhoneNumber(context context.Context, configuration *Configuration, phoneNumber string, password string, options ...SessionOption) (*Session, error) {
-	return e.Authenticate(context, configuration, NewPhoneNumberAuthenticator(phoneNumber, password), options...)
+func (e Ewelink) AuthenticateWithPhoneNumber(context context.Context, configuration *Configuration, phoneNumber string, password string, application *Application, options ...SessionOption) (*Session, error) {
+	return e.Authenticate(context, configuration, application, NewPhoneNumberAuthenticator(phoneNumber, password), options...)
 }
 
 // GetDevices - Returns information about the devices.
 func (e Ewelink) GetDevices(ctx context.Context, session *Session) (*DevicesResponse, error) {
 	request := newGetDevicesRequest(createDeviceQuery(session), session)
 
-	response, err := e.call(ctx, request)
+	response, err := e.call(ctx, request, session.Application.AppSecret)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (e Ewelink) websocketCall(context context.Context, session *Session, reques
 	return nil, fmt.Errorf("websocket request is nil, not allowed")
 }
 
-func (e Ewelink) call(context context.Context, request HTTPRequest) (Response, error) {
+func (e Ewelink) call(context context.Context, request HTTPRequest, appSecret string) (Response, error) {
 	if err := e.validate(request); err != nil {
 		return nil, err
 	}

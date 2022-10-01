@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	appID      = "oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq"
+	appID      = "YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q"
+	appSecret  = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa"
 	version    = "8"
 	apkVersion = "1.8"
 )
@@ -18,6 +19,7 @@ type Application struct {
 	AppVersion string
 	Version    string
 	AppID      string
+	AppSecret  string
 	ApkVersion string
 }
 
@@ -25,8 +27,8 @@ func (a Application) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-func newApplication() *Application {
-	return &Application{AppVersion: getRandomApplicationVersion(), Version: version, AppID: appID, ApkVersion: apkVersion}
+func NewApplication() *Application {
+	return &Application{AppVersion: getRandomApplicationVersion(), Version: version, AppID: appID, AppSecret: appSecret, ApkVersion: apkVersion}
 }
 
 func getRandomApplicationVersion() string {

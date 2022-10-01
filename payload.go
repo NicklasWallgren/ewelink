@@ -23,6 +23,7 @@ type emailAuthenticationPayload struct {
 	Ts         int64      `json:"ts"`
 	Nonce      string     `json:"nonce"`
 	AppID      string     `json:"appid"`
+	AppSecret  string     `json:"appsecret"`
 	Imei       string     `json:"imei"`
 	Os         string     `json:"os"`
 	Model      string     `json:"model"`

@@ -23,7 +23,7 @@ func TestAuthentication(t *testing.T) {
 	mux.HandleFunc("/", fileToResponseHandler(t, "resource/test_data/authentication_ok_response.json"))
 
 	session, err := ewelink.Authenticate(
-		context.Background(), NewConfiguration("us"), NewEmailAuthenticator("user@gmail.com", "secret password"))
+		context.Background(), NewConfiguration("us"), ewelink.NewApplication(), NewEmailAuthenticator("user@gmail.com", "secret password"))
 	failOnError(t, err)
 
 	if session == nil {
@@ -38,7 +38,7 @@ func TestAuthenticationWithEmail(t *testing.T) {
 	mux.HandleFunc("/", fileToResponseHandler(t, "resource/test_data/authentication_ok_response.json"))
 
 	session, err := ewelink.AuthenticateWithEmail(
-		context.Background(), NewConfiguration("us"), "user@gmail.com", "secret password")
+		context.Background(), NewConfiguration("us"), "user@gmail.com", "secret password", ewelink.NewApplication())
 	failOnError(t, err)
 
 	if session == nil {
@@ -52,7 +52,7 @@ func TestAuthenticationWithPhoneNumber(t *testing.T) {
 	// Implement once the phone number authenticator has been implemented
 	assert.Panics(t, func() {
 		// nolint:errcheck
-		_, _ = ewelink.AuthenticateWithPhoneNumber(context.Background(), NewConfiguration("us"), "phone number", "secret password")
+		_, _ = ewelink.AuthenticateWithPhoneNumber(context.Background(), NewConfiguration("us"), "phone number", "secret password", ewelink.NewApplication())
 	})
 }
 
@@ -129,7 +129,7 @@ func setupWithWebsocket() (*Ewelink, *http.ServeMux, net.Addr, func()) {
 
 func mockSession() *Session {
 	return &Session{
-		Application:         newApplication(),
+		Application:         NewApplication(),
 		User:                &User{AppID: "1", APIKey: "1", Language: "en"},
 		AuthenticationToken: "",
 		Configuration:       NewConfiguration("us"),

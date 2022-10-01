@@ -10,7 +10,7 @@ import (
 	"math/rand"
 )
 
-const hash = "6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM"
+//const hash = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa"
 
 func generateNonce() string {
 	return "1" // TODO
@@ -20,7 +20,7 @@ func getRandomNumber(n1 int, n2 int) int {
 	return rand.Intn(n2-n1) + n1 // #nosec:G404
 }
 
-func calculateHash(subject []byte) (string, error) {
+func calculateHash(subject []byte, hash string) (string, error) {
 	mac := hmac.New(sha256.New, []byte(hash))
 	if _, err := mac.Write(subject); err != nil {
 		return "", fmt.Errorf("unable to hash content %w", err)

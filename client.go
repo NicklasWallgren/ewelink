@@ -31,7 +31,7 @@ func (c client) call(context context.Context, request HTTPRequest) (Response, er
 		return nil, fmt.Errorf("could not encode http request payload. %w", err)
 	}
 
-	req, err := c.newRequest(context, request.Method(), buildRequestURL(request), request.Query(), encoded, request.Headers(), request.IsToBeSigned())
+	req, err := c.newRequest(context, request.Method(), buildRequestURL(request), request.Query(), encoded, request.Session().Application.AppSecret, request.Headers(), request.IsToBeSigned())
 	if err != nil {
 		return nil, fmt.Errorf("unable to process request. %w", err)
 	}
@@ -51,7 +51,7 @@ func (c *client) withHTTPClient(client *http.Client) {
 }
 
 // newRequest creates and prepares a instance of http http.httpRequest.
-func (c client) newRequest(context context.Context, method string, url string, query *url.Values, body []byte, headers *http.Header, isSigned bool) (*http.Request, error) {
+func (c client) newRequest(context context.Context, method string, url string, query *url.Values, body []byte, appSecret string, headers *http.Header, isSigned bool) (*http.Request, error) {
 	req, err := http.NewRequestWithContext(context, method, url, strings.NewReader(string(body)))
 	if err != nil {
 		return nil, fmt.Errorf("unable to create request %w", err)
@@ -61,7 +61,7 @@ func (c client) newRequest(context context.Context, method string, url string, q
 	addQueryParameters(req, query)
 
 	if isSigned {
-		hashedBody, err := calculateHash(body)
+		hashedBody, err := calculateHash(body, appSecret)
 		if err != nil {
 			return nil, fmt.Errorf("unable to calculated the hash of the request body %w", err)
 		}

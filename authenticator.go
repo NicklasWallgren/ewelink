@@ -57,6 +57,7 @@ func buildEmailAuthenticationPayload(email string, password string, session *Ses
 		Ts:         time.Now().Unix(),
 		Nonce:      generateNonce(),
 		AppID:      session.Application.AppID,
+		AppSecret:  session.Application.AppSecret,
 		Imei:       session.MobileDevice.Imei(),
 		Os:         session.MobileDevice.Os(),
 		Model:      session.MobileDevice.Model(),
