@@ -31,7 +31,7 @@ We support the two major Go versions, which are 1.15 and 1.16 at the moment.
 import (
     "context"
     "fmt"
-    "github.com/NicklasWallgren/ewelink"
+    "github.com/jacostaperu/ewelink"
 )
 
 instance := ewelink.New()
