@@ -223,10 +223,9 @@ type Device struct {
 	ShowBrand    bool          `json:"showBrand"`
 	BrandLogoURL string        `json:"brandLogoUrl"`
 	ProductModel string        `json:"productModel"`
-	DevConfig    struct {
-	} `json:"devConfig"`
-	Uiid int `json:"uiid"`
-	Tags struct {
+	DevConfig    struct{}      `json:"devConfig"`
+	Uiid         int           `json:"uiid"`
+	Tags         struct {
 		DisableTimers []struct {
 			Do struct {
 				Switch string `json:"switch"`

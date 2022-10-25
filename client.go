@@ -31,7 +31,7 @@ func (c client) call(context context.Context, request HTTPRequest) (Response, er
 		return nil, fmt.Errorf("could not encode http request payload. %w", err)
 	}
 
-	req, err := c.newRequest(context, request.Method(), buildRequestURL(request), request.Query(), encoded, request.Session().Application.AppSecret, request.Headers(), request.IsToBeSigned())
+	req, err := c.newRequest(context, request.Method(), buildRequestURL(request), request.Query(), encoded, request.Session().Configuration.AppSecret, request.Headers(), request.IsToBeSigned())
 	if err != nil {
 		return nil, fmt.Errorf("unable to process request. %w", err)
 	}

@@ -10,8 +10,6 @@ import (
 	"math/rand"
 )
 
-//const hash = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa"
-
 func generateNonce() string {
 	return "1" // TODO
 }

@@ -24,13 +24,11 @@ linters:
     - gofmt
     - gofumpt
     - goimports
-    - golint
     - gosec
     - maligned
     - nestif
     - noctx
     - whitespace
-    - wrapcheck
 
 issues:
   exclude-use-default: false
