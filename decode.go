@@ -20,8 +20,6 @@ func newJSONResponseDecoder() responseDecoder {
 func (j jsonResponseDecoder) decode(subject Response, response io.ReadCloser, status int) (Response, error) {
 	responseAsString := tryReadCloserToString(response)
 
-	fmt.Println("Response " + responseAsString)
-
 	// Decode the response into the expected response type
 	decoded, err := subject.Decode(ioutil.NopCloser(strings.NewReader(responseAsString)))
 	if err != nil {
