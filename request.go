@@ -124,7 +124,7 @@ func createUpdatePowerStateOfOutletParameters(device *Device, outletIndex int, n
 			continue
 		}
 
-		statePerOutlet[i] = device.Params.Switches[i] == on
+		statePerOutlet[i] = device.Params.Switches[i].Switch == on
 	}
 
 	return &DeviceOutletPowerStateAction{PowerOn: statePerOutlet}
