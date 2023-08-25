@@ -8,8 +8,8 @@ import (
 const (
 	baseURL          = "https://%s-api.coolkit.cc:8080/api"
 	websocketHost    = "%s-pconnect3.coolkit.cc:8080"
-	defaultAppID     = "YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q"
-	defaultAppSecret = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa" // nolint:gosec
+	defaultAppID     = "Uw83EKZFxdif7XFXEsrpduz5YyjP7nTl"
+	defaultAppSecret = "mXLOjea0woSMvK9gw7Fjsy7YlFO4iSu6" // nolint:gosec
 )
 
 // Configuration contains the configuration specific fields.
