@@ -204,12 +204,15 @@ type Device struct {
 				Switch string `json:"switch"`
 			} `json:"do"`
 		} `json:"timers"`
-		Startup       string   `json:"startup"`
-		FwVersion     string   `json:"fwVersion"`
-		Switch        string   `json:"switch"`
-		Switches      []string `json:"switches"`
-		ControlType   int      `json:"controlType"`
-		PartnerApikey string   `json:"partnerApikey"`
+		Startup   string `json:"startup"`
+		FwVersion string `json:"fwVersion"`
+		Switch    string `json:"switch"`
+		Switches  []struct {
+			Switch string `json:"switch"`
+			Outlet int    `json:"outlet"`
+		} `json:"switches"`
+		ControlType   int    `json:"controlType"`
+		PartnerApikey string `json:"partnerApikey"`
 		BindInfos     struct {
 			Gaction []string `json:"gaction"`
 		} `json:"bindInfos"`

@@ -1,4 +1,4 @@
-module github.com/NicklasWallgren/ewelink
+module github.com/ebogdanov/ewelink
 
 go 1.13
 
